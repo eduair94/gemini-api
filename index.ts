@@ -10,7 +10,7 @@ server.postJson("api/json", async (req: Request, res: Response) => {
   return { text: response };
 });
 server.getJson("api", async (req: Request, res: Response) => {
-  return { text: "Im alive" };
+  return { text: "Im alive, testing" };
 });
 
 export default server.getApp();
