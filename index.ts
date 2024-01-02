@@ -12,9 +12,9 @@ app.use(express.json());
 app.post("/api/json", async (req, res) => {
   const response = await gemini.generateContentReq(req.body.prompt);
   if (!response) {
-    return { error: "No response", text: "" };
+    return res.json({ error: "No response", text: "" });
   }
-  return { text: response };
+  res.json({ text: response });
 });
 
 app.post("/api", (req, res) => {
