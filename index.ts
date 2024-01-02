@@ -1,16 +1,29 @@
-import { Request, Response } from "express";
-import server from "./classes/Express/ExpressSetup";
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
 import { gemini } from "./classes/Gemini";
-console.log("Run server");
-server.postJson("api/json", async (req: Request, res: Response) => {
+dotenv.config({});
+
+const app = express();
+app.use(cors());
+app.use(express.static("public"));
+app.use(express.json());
+
+app.post("/api/json", async (req, res) => {
   const response = await gemini.generateContentReq(req.body.prompt);
   if (!response) {
     return { error: "No response", text: "" };
   }
   return { text: response };
 });
-server.getJson("api", async (req: Request, res: Response) => {
-  return { text: "Im alive, testing" };
+
+app.post("/api", (req, res) => {
+  res.json({ text: "Hello World!" });
 });
 
-export default server.getApp();
+const port = !isNaN(parseInt(process.env.PORT as string)) ? parseInt(process.env.PORT as string) : 3000;
+app.listen(port, () => {
+  console.log(`Express server listening to port ${port}`);
+});
+
+export default app;
