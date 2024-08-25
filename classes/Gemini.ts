@@ -6,7 +6,7 @@ dotenv.config();
 class Gemini {
   apiKey = process.env.API_KEY;
 
-  async generateContentReq(prompt: string) {
+  async generateContentReq(prompt: string, inlineData:any) {
     const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + this.apiKey;
     const opt: AxiosRequestConfig = {
       headers: { "Content-Type": "application/json" },
@@ -15,7 +15,7 @@ class Gemini {
       .post(
         url,
         {
-          contents: { parts: [{ text: prompt }] },
+          contents: { parts: [{ text: prompt, inlineData: inlineData }] },
         },
         opt
       )

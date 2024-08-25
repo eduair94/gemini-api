@@ -10,7 +10,8 @@ app.use(express.static("public"));
 app.use(express.json());
 
 app.post("/api/json", async (req, res) => {
-  const response = await gemini.generateContentReq(req.body.prompt);
+  const { prompt, inlineData } = req.body;
+  const response = await gemini.generateContentReq(prompt, inlineData);
   if (!response) {
     return res.json({ error: "No response", text: "" });
   }
